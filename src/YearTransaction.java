@@ -26,7 +26,7 @@ public class YearTransaction {
         }
 
 
-        public void yearStatistics () {
+        public Statistics yearStatistics () {
             int expenseSum = 0;
             int expenseCount = 0;
             int incomeSum = 0;
@@ -46,6 +46,7 @@ public class YearTransaction {
             double averageExpense = calculateAverage(expenseSum, expenseCount);
             double averageIncome = calculateAverage(incomeSum, incomeCount);
 
+            return new Statistics(averageIncome, averageExpense);
 
             }
 
@@ -53,7 +54,6 @@ public class YearTransaction {
                 if (count == 0) {
                     return 0.0;
                 }
-                //System.out.println((double) sum / count);
                 return (double) sum / count;
             }
 

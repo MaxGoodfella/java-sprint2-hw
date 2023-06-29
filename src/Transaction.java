@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Transaction {
 
@@ -26,6 +25,71 @@ public class Transaction {
                 }
             }
 
+
+        public void monthStatistics() {
+
+            ArrayList<MonthlyReport> month1Reports = new ArrayList<>();
+            ArrayList<MonthlyReport> month2Reports = new ArrayList<>();
+            ArrayList<MonthlyReport> month3Reports = new ArrayList<>();
+
+
+            loadFile("01", "m.202101.csv");
+            loadFile("02", "m.202102.csv");
+            loadFile("03", "m.202103.csv");
+
+            // calculateMonthStatistics("01", monthlyReports);
+            // calculateMonthStatistics("02", monthlyReports);
+            // calculateMonthStatistics("03", monthlyReports);
+
+            calculateMonthStatistics("01", month1Reports);
+            calculateMonthStatistics("02", month2Reports);
+            calculateMonthStatistics("03", month3Reports);
+
+        }
+
+        public void calculateMonthStatistics(String month, ArrayList<MonthlyReport> monthlyReports) {
+            int maxIncome = 0;
+            int maxExpense = 0;
+            String profitableItem = "";
+            String expensiveItem = "";
+
+            for (MonthlyReport monthlyReport : monthlyReports) {
+                int amount = monthlyReport.getQuantity() * monthlyReport.getPrice();
+
+                if (monthlyReport.isExpense()) {
+                    if (amount > maxExpense) {
+                        maxExpense = amount;
+                        expensiveItem = monthlyReport.getName();
+                    }
+                } else {
+                    if (amount > maxIncome) {
+                        maxIncome = amount;
+                        profitableItem = monthlyReport.getName();
+                    }
+                }
+            }
+
+            System.out.println("Месяц: " + month);
+            System.out.println("Самый прибыльный товар: " + profitableItem + ", сумма: " + maxIncome);
+            System.out.println("Самая большая трата: " + expensiveItem + ", сумма: " + maxExpense);
+            System.out.println();
+        }
+
+
+    public ArrayList<String> readFileContents(String fileName) {
+        String path = "./resources/" + fileName;
+        try {
+            return new ArrayList<>(Files.readAllLines(Path.of(path)));
+        } catch (IOException e) {
+            System.out.println("Невозможно прочитать файл с отчётом. Возможно, файл отсутствует в нужной директории.");
+            return new ArrayList<>();
+        }
+    }
+
+}
+
+
+            /*
     public String monthStatistics() {
         HashMap<String, Integer> stats = new HashMap<>(); // String - название товара, Integer = quantity*price, but depending on -if we should decide on whether this total amount is expense or not
         for (MonthlyReport monthlyReport : monthlyReports) {
@@ -53,7 +117,7 @@ public class Transaction {
                       return monthSumExpense;
                       return monthlyReport.name; */
 
-                 System.out.println("Максимальный расход - " + monthMaxExpense + ". Сумма расходов - " + monthSumExpense + ". Название товара - " + monthlyReport.name + ".");
+                /* System.out.println("Максимальный расход - " + monthMaxExpense + ". Сумма расходов - " + monthSumExpense + ". Название товара - " + monthlyReport.name + ".");
             } else {
                 // если не является тратой, то это товар, нужно считать самый прибыльный товар, название товара и сумму
                 String monthMaxIncome = null;
@@ -76,7 +140,7 @@ public class Transaction {
                         return monthSumIncome;
                         return monthlyReport.name; */
 
-                System.out.println("Максимальный доход - " + monthMaxIncome + ". Сумма доходов - " + monthSumIncome + ". Название товара - " + monthlyReport.name + ".");
+             /*   System.out.println("Максимальный доход - " + monthMaxIncome + ". Сумма доходов - " + monthSumIncome + ". Название товара - " + monthlyReport.name + ".");
 
             }
 
@@ -87,17 +151,14 @@ public class Transaction {
         return "Нет данных о доходах и расходах.";
     }
 
-    public ArrayList<String> readFileContents(String fileName) {
-                String path = "./resources/" + fileName;
-                try {
-                        return new ArrayList<>(Files.readAllLines(Path.of(path)));
-                } catch (IOException e) {
-                        System.out.println("Невозможно прочитать файл с отчётом. Возможно, файл отсутствует в нужной директории.");
-                        return new ArrayList<>();
-                }
-        }
 
-}
+
+     */
+
+
+
+
+
 
 
 

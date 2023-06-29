@@ -37,10 +37,14 @@ public class YearlyReportEngine {
             }  // здесь мы наполнили годовые данными по расходам и доходам
 
             for (MonthlyReport monthlyReport : transaction.monthlyReports) {
-                if (monthlyReport.isExpense) {
-                    expensesMonth.put(Integer.parseInt(monthlyReport.month), expensesMonth.getOrDefault(Integer.parseInt(monthlyReport.month), 0) + (monthlyReport.quantity * monthlyReport.price));
+                //if (monthlyReport.isExpense) {
+                if (monthlyReport.isExpense()) {
+                    // expensesMonth.put(monthlyReport.month, expensesMonth.getOrDefault(monthlyReport.month, 0) + (monthlyReport.quantity * monthlyReport.price));
+                    // expensesMonth.put(Integer.parseInt(monthlyReport.month), expensesMonth.getOrDefault(Integer.parseInt(monthlyReport.month), 0) + (monthlyReport.quantity * monthlyReport.price));
+                    expensesMonth.put(Integer.parseInt(monthlyReport.getMonth()), expensesMonth.getOrDefault(Integer.parseInt(monthlyReport.getMonth()), 0) + (monthlyReport.getQuantity() * monthlyReport.getPrice()));
                 } else {
-                    revenueMonth.put(Integer.parseInt(monthlyReport.month), revenueMonth.getOrDefault(Integer.parseInt(monthlyReport.month), 0) + (monthlyReport.quantity * monthlyReport.price));
+                    // revenueMonth.put(Integer.parseInt(monthlyReport.month), revenueMonth.getOrDefault(Integer.parseInt(monthlyReport.month), 0) + (monthlyReport.quantity * monthlyReport.price));
+                    revenueMonth.put(Integer.parseInt(monthlyReport.getMonth()), revenueMonth.getOrDefault(Integer.parseInt(monthlyReport.getMonth()), 0) + (monthlyReport.getQuantity() * monthlyReport.getPrice()));
                 }
             }
 
