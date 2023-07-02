@@ -12,9 +12,6 @@ public class YearlyReportEngine {
     }
 
     public boolean check() {
-        // здесь должна быть сверка
-        // мне нужно каким-то образом сверить один файл годового отчета с тремя файлами месячных отчётов
-        // но проблема в том, что есть доходы и расходы
 
         boolean check = true;
 
@@ -37,13 +34,9 @@ public class YearlyReportEngine {
             }  // здесь мы наполнили годовые данными по расходам и доходам
 
             for (MonthlyReport monthlyReport : transaction.monthlyReports) {
-                //if (monthlyReport.isExpense) {
                 if (monthlyReport.isExpense()) {
-                    // expensesMonth.put(monthlyReport.month, expensesMonth.getOrDefault(monthlyReport.month, 0) + (monthlyReport.quantity * monthlyReport.price));
-                    // expensesMonth.put(Integer.parseInt(monthlyReport.month), expensesMonth.getOrDefault(Integer.parseInt(monthlyReport.month), 0) + (monthlyReport.quantity * monthlyReport.price));
                     expensesMonth.put(Integer.parseInt(monthlyReport.getMonth()), expensesMonth.getOrDefault(Integer.parseInt(monthlyReport.getMonth()), 0) + (monthlyReport.getQuantity() * monthlyReport.getPrice()));
                 } else {
-                    // revenueMonth.put(Integer.parseInt(monthlyReport.month), revenueMonth.getOrDefault(Integer.parseInt(monthlyReport.month), 0) + (monthlyReport.quantity * monthlyReport.price));
                     revenueMonth.put(Integer.parseInt(monthlyReport.getMonth()), revenueMonth.getOrDefault(Integer.parseInt(monthlyReport.getMonth()), 0) + (monthlyReport.getQuantity() * monthlyReport.getPrice()));
                 }
             }
@@ -94,11 +87,6 @@ public class YearlyReportEngine {
                 System.out.println("Внимание!");
             }
         }
-
-        /* transaction.loadFile("January", "resources/m.202101.csv");
-        transaction.loadFile("February","resources/m.202102.csv");
-        transaction.loadFile("March","resources/m.202103.csv"); */
-
     }
 
         public void readYearlyReport () {
@@ -106,80 +94,5 @@ public class YearlyReportEngine {
             if (lines.isEmpty()) {
                 System.out.println("Внимание!");
             }
-
-            // yearTransaction.loadFile("resources/y.2021.csv");
-
         }
-
 }
-
-/* HashMap<Integer, MonthlyReport> monthlyReports = new HashMap<>();
-
-    FileReader fileReader = new FileReader(); */
-
-/*
-
-    public void readYearlyReport() {
-
-        }
-
-
-
-     */
-
-
-/*
-        String filePrefix = "";
-        String delimiter = ",";
-
-        for (int i = 1; i <= 3; i++) {
-
-            String filename = filePrefix + "m.20210" + i + ".csv";
-            ArrayList<String> strings = FileReader.readFileContent(filename);
-            if (strings.isEmpty()) {
-                 System.out.println("Внимание!");
-            }
-
-            MonthlyReport monthlyReport = new MonthlyReport();
-
-            for (int j = 0; j < strings.size(); j++) {
-                String row = strings.get(i);
-                String[] splitted = row.split(delimiter);
-                Transaction transaction = new Transaction(name, quantity, sum, isExpense);
-                transaction.name = splitted[0];
-                transaction.isExpense = Boolean.parseBoolean(splitted[1]);
-                transaction.quantity = Integer.parseInt(splitted[2]);
-                transaction.sum = Integer.parseInt(splitted[3]);
-
-                monthlyReport.rows.add(transaction);
-
-            }
-
-            monthlyReports.put(i, monthlyReport);
-
-        }
-
-
-                String delimiter = ",";
-
-        ArrayList<String> lines = fileReader.readFileContents("y.2021.csv");
-        if (lines.isEmpty()) {
-            System.out.println("Внимание!");
-        }
-
-        YearlyReport yearlyReport = new YearlyReport();
-
-
-        for (int k = 0; k < lines.size(); k++) {
-            String row = lines.get(k);
-            String[] splitted = row.split(delimiter);
-            YearTransaction yearTransaction = new YearTransaction();
-            yearTransaction.month = Integer.parseInt(splitted[0]);
-            yearTransaction.expenseSum = Integer.parseInt(splitted[1]);
-            yearTransaction.incomeSum = Integer.parseInt(splitted[2]);
-
-            //yearlyReport.rowss.add(yearTransaction);
-            yearlyReport.months.put(k, yearlyReport);
-        }
-
- */

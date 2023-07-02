@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -6,21 +7,16 @@ public class Main {
 
         Transaction transaction = new Transaction();
         transaction.loadFile("01", "m.202101.csv");
-        transaction.loadFile("02","m.202102.csv");
-        transaction.loadFile("03","m.202103.csv");
+        transaction.loadFile("02", "m.202102.csv");
+        transaction.loadFile("03", "m.202103.csv");
 
-        /* transaction.loadFile("January", "resources/m.202101.csv");
-        transaction.loadFile("February","resources/m.202102.csv");
-        transaction.loadFile("March","resources/m.202103.csv"); */
 
         YearTransaction yearTransaction = new YearTransaction();
-        // выше был параметр "resources/y.2021.csv" | пока что убрал его
         yearTransaction.loadFile("y.2021.csv");
 
         Scanner scanner = new Scanner(System.in);
 
         YearlyReportEngine engine = new YearlyReportEngine(transaction, yearTransaction);
-        //boolean answer = engine.check();
 
 
         while (true) {
@@ -28,27 +24,27 @@ public class Main {
             int userInput = scanner.nextInt();
 
             if (userInput == 1) {
-
                 engine.readMonthlyReport();
                 System.out.println("Месячный отчёт считан!");
+                System.out.println();
             } else if (userInput == 2) {
-
                 engine.readYearlyReport();
                 System.out.println("Годовой отчёт считан!");
+                System.out.println();
             } else if (userInput == 3) {
-                // engine.check();
                 boolean answer = engine.check();
                 System.out.println("Результат проверки: " + answer);
+                System.out.println();
             } else if (userInput == 4) {
                 System.out.println("Статистика месячных отчётов:");
                 transaction.monthStatistics();
-
             } else if (userInput == 5) {
                 System.out.println("Статистика годового отчёта:");
                 Statistics statistics = yearTransaction.yearStatistics();
                 double averageExpense = statistics.getAvgExpense();
                 double averageIncome = statistics.getAvgIncome();
                 System.out.println("Средний расход весь год - " + averageExpense + "." + " Средний доход за весь год - " + averageIncome + ".");
+                System.out.println();
             } else if (userInput == 6) {
                 System.out.println("Выход");
                 break;
@@ -56,8 +52,6 @@ public class Main {
                 System.out.println("Извините, такой команды пока нет.");
             }
         }
-            // здесь должны быть условные выражения
-
     }
 
     private static void printMenu() {
@@ -70,6 +64,3 @@ public class Main {
         System.out.println("6 - Выход");
     }
 }
-
-// /Users/MaximGuseynov/dev/second-sprint/java-sprint2-hw/resources
-// выше дан абсолютный путь до этих ребят, надо попробовать им сделать

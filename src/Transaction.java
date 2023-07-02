@@ -2,16 +2,21 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Transaction {
 
+        private HashMap<String, ArrayList<MonthlyReport>> reports = new HashMap<>();
+
         public ArrayList<MonthlyReport> monthlyReports = new ArrayList<>();
+
 
         public void loadFile(String month, String path) {
 
                 ArrayList<String> content = readFileContents(path);
                 String contentString = String.join("\n", content);
                 String[] lines = contentString.split("\n");
+                ArrayList<MonthlyReport> monthReports = new ArrayList<>();
                 for (int i = 1; i < lines.length; i++) {
                         String line = lines[i]; // item_name,is_expense,quantity,unit_price
                         String[] parts = line.split(",");
@@ -21,33 +26,28 @@ public class Transaction {
                         int price = Integer.parseInt(parts[3]);
 
                         MonthlyReport monthlyReport = new MonthlyReport(name, quantity, price, isExpense, month);
+                        monthReports.add(monthlyReport);
                         monthlyReports.add(monthlyReport);
                 }
-            }
+            reports.put(month, monthReports);
+        }
 
 
         public void monthStatistics() {
-
-            ArrayList<MonthlyReport> month1Reports = new ArrayList<>();
-            ArrayList<MonthlyReport> month2Reports = new ArrayList<>();
-            ArrayList<MonthlyReport> month3Reports = new ArrayList<>();
-
 
             loadFile("01", "m.202101.csv");
             loadFile("02", "m.202102.csv");
             loadFile("03", "m.202103.csv");
 
-            // calculateMonthStatistics("01", monthlyReports);
-            // calculateMonthStatistics("02", monthlyReports);
-            // calculateMonthStatistics("03", monthlyReports);
-
-            calculateMonthStatistics("01", month1Reports);
-            calculateMonthStatistics("02", month2Reports);
-            calculateMonthStatistics("03", month3Reports);
+            calculateMonthStatistics("01");
+            calculateMonthStatistics("02");
+            calculateMonthStatistics("03");
 
         }
 
-        public void calculateMonthStatistics(String month, ArrayList<MonthlyReport> monthlyReports) {
+
+        public void calculateMonthStatistics(String month) {
+            ArrayList<MonthlyReport> monthlyReports = reports.get(month);
             int maxIncome = 0;
             int maxExpense = 0;
             String profitableItem = "";
@@ -68,7 +68,6 @@ public class Transaction {
                     }
                 }
             }
-
             System.out.println("Месяц: " + month);
             System.out.println("Самый прибыльный товар: " + profitableItem + ", сумма: " + maxIncome);
             System.out.println("Самая большая трата: " + expensiveItem + ", сумма: " + maxExpense);
@@ -85,124 +84,4 @@ public class Transaction {
             return new ArrayList<>();
         }
     }
-
 }
-
-
-            /*
-    public String monthStatistics() {
-        HashMap<String, Integer> stats = new HashMap<>(); // String - название товара, Integer = quantity*price, but depending on -if we should decide on whether this total amount is expense or not
-        for (MonthlyReport monthlyReport : monthlyReports) {
-            stats.put(monthlyReport.name, stats.getOrDefault(monthlyReport.name, 0) + monthlyReport.quantity * monthlyReport.price);// здесь нужно сделать stats.put
-
-            if (monthlyReport.isExpense) {
-                // если является тратой, то нужно считать самую большую трату, название товара и сумму
-                String monthMaxExpense = null;
-                for (String month : stats.keySet()) {
-                    if (monthMaxExpense == null) {
-                        monthMaxExpense = month;
-                        continue;
-                    }
-                    if (stats.get(monthMaxExpense) < stats.get(month)) {
-                        monthMaxExpense = month;
-                    }
-                }
-
-                String monthSumExpense = null;
-                for (String expense : stats.keySet()) {
-                    monthSumExpense += expense;
-                }
-
-                      /* return monthMaxExpense;
-                      return monthSumExpense;
-                      return monthlyReport.name; */
-
-                /* System.out.println("Максимальный расход - " + monthMaxExpense + ". Сумма расходов - " + monthSumExpense + ". Название товара - " + monthlyReport.name + ".");
-            } else {
-                // если не является тратой, то это товар, нужно считать самый прибыльный товар, название товара и сумму
-                String monthMaxIncome = null;
-                for (String month : stats.keySet()) {
-                    if (monthMaxIncome == null) {
-                        monthMaxIncome = month;
-                        continue;
-                    }
-                    if (stats.get(monthMaxIncome) < stats.get(month)) {
-                        monthMaxIncome = month;
-                    }
-                }
-
-                String monthSumIncome = null;
-                for (String income : stats.keySet()) {
-                    monthSumIncome += income;
-                }
-
-                        /* return monthMaxIncome;
-                        return monthSumIncome;
-                        return monthlyReport.name; */
-
-             /*   System.out.println("Максимальный доход - " + monthMaxIncome + ". Сумма доходов - " + monthSumIncome + ". Название товара - " + monthlyReport.name + ".");
-
-            }
-
-
-        }
-
-
-        return "Нет данных о доходах и расходах.";
-    }
-
-
-
-     */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//String filePrefix = "";
-
-//for (int i = 1; i <= 3; i++) {
-//ArrayList<String> content = readFileContents(filePrefix + "m.20210" + i + ".csv");
-
-
-            /*
-            String filePrefix = "";
-
-            for (int i = 1; i <= 3; i++) {
-
-
-                String filename = filePrefix + "m.20210" + i + ".csv";
-                ArrayList<String> strings = FileReader.readFileContent(filename);
-                if (strings.isEmpty()) {
-                    System.out.println("Внимание!");
-                } */

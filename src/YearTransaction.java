@@ -25,7 +25,6 @@ public class YearTransaction {
                 }
         }
 
-
         public Statistics yearStatistics () {
             int expenseSum = 0;
             int expenseCount = 0;
@@ -48,14 +47,15 @@ public class YearTransaction {
 
             return new Statistics(averageIncome, averageExpense);
 
-            }
+        }
 
-            public double calculateAverage(int sum, int count){
-                if (count == 0) {
-                    return 0.0;
-                }
-                return (double) sum / count;
+        public double calculateAverage(int sum, int count){
+            if (count == 0) {
+                return 0.0;
             }
+            return (double) sum / count;
+        }
+
 
         public ArrayList<String> readFileContents(String fileName) {
                 String path = "./resources/" + fileName;
