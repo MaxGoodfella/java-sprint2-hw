@@ -8,12 +8,13 @@ public class Transaction {
 
         private HashMap<String, ArrayList<MonthlyReport>> reports = new HashMap<>();
 
-        public ArrayList<MonthlyReport> monthlyReports = new ArrayList<>();
+        protected ArrayList<MonthlyReport> monthlyReports = new ArrayList<>();
+        FileReader fileReader = new FileReader(); // этого раньше не было
 
 
         public void loadFile(String month, String path) {
 
-                ArrayList<String> content = readFileContents(path);
+                ArrayList<String> content = fileReader.readFileContents(path); // раньше было readFileContents(path)
                 String contentString = String.join("\n", content);
                 String[] lines = contentString.split("\n");
                 ArrayList<MonthlyReport> monthReports = new ArrayList<>();
@@ -23,7 +24,7 @@ public class Transaction {
                         String name = parts[0];
                         boolean isExpense = Boolean.parseBoolean(parts[1]);
                         int quantity = Integer.parseInt(parts[2]);
-                        int price = Integer.parseInt(parts[3]);
+                        int price = Integer.parseInt(parts[3]); //
 
                         MonthlyReport monthlyReport = new MonthlyReport(name, quantity, price, isExpense, month);
                         monthReports.add(monthlyReport);
@@ -33,17 +34,17 @@ public class Transaction {
         }
 
 
-        public void monthStatistics() {
-
-            loadFile("01", "m.202101.csv");
-            loadFile("02", "m.202102.csv");
-            loadFile("03", "m.202103.csv");
-
-            calculateMonthStatistics("01");
-            calculateMonthStatistics("02");
-            calculateMonthStatistics("03");
-
-        }
+//        public void monthStatistics() {
+//
+//            loadFile("01", "m.202101.csv");
+//            loadFile("02", "m.202102.csv");
+//            loadFile("03", "m.202103.csv");
+//
+//            calculateMonthStatistics("01");
+//            calculateMonthStatistics("02");
+//            calculateMonthStatistics("03");
+//
+//        }
 
 
         public void calculateMonthStatistics(String month) {
@@ -75,6 +76,8 @@ public class Transaction {
         }
 
 
+
+/*
     public ArrayList<String> readFileContents(String fileName) {
         String path = "./resources/" + fileName;
         try {
@@ -84,4 +87,5 @@ public class Transaction {
             return new ArrayList<>();
         }
     }
+*/
 }

@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.HashMap;
 
 public class YearlyReportEngine {
@@ -75,24 +75,4 @@ public class YearlyReportEngine {
             return check;
         }
     }
-
-    public void readMonthlyReport() {
-        String filePrefix = "";
-
-        for (int i = 1; i <= 3; i++) {
-
-            String filename = filePrefix + "m.20210" + i + ".csv";
-            ArrayList<String> strings = transaction.readFileContents(filename);
-            if (strings.isEmpty()) {
-                System.out.println("Внимание!");
-            }
-        }
-    }
-
-        public void readYearlyReport () {
-            ArrayList<String> lines = yearTransaction.readFileContents("y.2021.csv");
-            if (lines.isEmpty()) {
-                System.out.println("Внимание!");
-            }
-        }
 }

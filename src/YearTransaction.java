@@ -8,9 +8,11 @@ public class YearTransaction {
 
         public ArrayList<YearlyReport> yearlyReports = new ArrayList<>();
 
+        FileReader fileReader = new FileReader(); // этого раньше не было
+
         public void loadFile(String path) {
 
-            ArrayList<String> content = readFileContents(path);
+            ArrayList<String> content = fileReader.readFileContents(path);
             String contentString = String.join("\n", content);
             String[] lines = contentString.split("\n");
                 for (int i = 1; i < lines.length; i++) {
@@ -54,16 +56,5 @@ public class YearTransaction {
                 return 0.0;
             }
             return (double) sum / count;
-        }
-
-
-        public ArrayList<String> readFileContents(String fileName) {
-                String path = "./resources/" + fileName;
-                try {
-                        return new ArrayList<>(Files.readAllLines(Path.of(path)));
-                } catch (IOException e) {
-                        System.out.println("Невозможно прочитать файл с отчётом. Возможно, файл отсутствует в нужной директории.");
-                        return new ArrayList<>();
-                }
         }
 }

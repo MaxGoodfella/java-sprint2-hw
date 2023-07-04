@@ -1,18 +1,12 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
 
         Transaction transaction = new Transaction();
-        transaction.loadFile("01", "m.202101.csv");
-        transaction.loadFile("02", "m.202102.csv");
-        transaction.loadFile("03", "m.202103.csv");
-
 
         YearTransaction yearTransaction = new YearTransaction();
-        yearTransaction.loadFile("y.2021.csv");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -24,11 +18,13 @@ public class Main {
             int userInput = scanner.nextInt();
 
             if (userInput == 1) {
-                engine.readMonthlyReport();
+                transaction.loadFile("01", "m.202101.csv");
+                transaction.loadFile("02", "m.202102.csv");
+                transaction.loadFile("03", "m.202103.csv");
                 System.out.println("Месячный отчёт считан!");
                 System.out.println();
             } else if (userInput == 2) {
-                engine.readYearlyReport();
+                yearTransaction.loadFile("y.2021.csv");
                 System.out.println("Годовой отчёт считан!");
                 System.out.println();
             } else if (userInput == 3) {
@@ -37,7 +33,9 @@ public class Main {
                 System.out.println();
             } else if (userInput == 4) {
                 System.out.println("Статистика месячных отчётов:");
-                transaction.monthStatistics();
+                transaction.calculateMonthStatistics("01");
+                transaction.calculateMonthStatistics("02");
+                transaction.calculateMonthStatistics("03");
             } else if (userInput == 5) {
                 System.out.println("Статистика годового отчёта:");
                 Statistics statistics = yearTransaction.yearStatistics();
