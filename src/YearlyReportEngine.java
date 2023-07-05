@@ -1,4 +1,3 @@
-// import java.util.ArrayList;
 import java.util.HashMap;
 
 public class YearlyReportEngine {
@@ -43,7 +42,7 @@ public class YearlyReportEngine {
 
             for (Integer monthsListed : revenueYear.keySet()) {
                 if (!revenueMonth.containsKey(monthsListed)) {
-                    System.out.println("Месяц " + monthsListed + " отстутсвует в месячном отчёте");
+                    System.out.println("Месяц " + monthsListed + " отстутствует в месячном отчёте");
                     check = false;
                     continue;
                 }
@@ -59,7 +58,7 @@ public class YearlyReportEngine {
 
             for (Integer monthsMentioned : expensesMonth.keySet()) {
                 if (!revenueMonth.containsKey(monthsMentioned)) {
-                    System.out.println("Месяц " + monthsMentioned + " отстутсвует в годовом отчёте");
+                    System.out.println("Месяц " + monthsMentioned + " отстутствует в годовом отчёте");
                     check = false;
                     continue;
                 }
